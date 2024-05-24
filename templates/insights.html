@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Traffic Insights</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        #map {
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Real-Time Traffic Insights</h1>
+        <!-- Weather Data -->
+        <div class="card mb-3">
+            <div class="card-header">
+                Weather Data
+            </div>
+            <div class="card-body">
+                <p>Temperature: {{ weather_data.temperature }}°C</p>
+                <p>Weather Conditions: {{ weather_data.weather_conditions }}</p>
+                <p>Wind Speed: {{ weather_data.wind_speed }} m/s</p>
+                <p>Humidity: {{ weather_data.humidity }}%</p>
+                <p>Visibility: {{ weather_data.visibility }}</p>
+                <p>Sunrise: {{ weather_data.sunrise }}</p>
+                <p>Sunset: {{ weather_data.sunset }}</p>
+            </div>
+        </div>
+
+        <!-- Traffic Data -->
+        <div class="card mb-3">
+            <div class="card-header">
+                Traffic Data
+            </div>
+            <div class="card-body">
+                <p>Duration: {{ traffic_data.duration }}</p>
+                <p>Distance: {{ traffic_data.distance }}</p>
+            </div>
+        </div>
+
+        <!-- Alternative Routes -->
+        <div class="card mb-3">
+            <div class="card-header">
+                Alternative Routes
+            </div>
+            <div class="card-body">
+                <ul>
+                    {% for route in alternative_routes %}
+                        <li>{{ route.duration }} - {{ route.distance }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Traffic Incidents -->
+        <div class="card mb-3">
+            <div class="card-header">
+                Traffic Incidents
+            </div>
+            <div class="card-body">
+                <ul>
+                    {% for incident in traffic_incidents %}
+                        <li>{{ incident.name }} - {{ incident.location }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Optimal Departure Time -->
+        <div class="card mb-3">
+            <div class="card-header">
+                Optimal Departure Time
+            </div>
+            <div class="card-body">
+                <p>{{ optimal_departure_time }}</p>
+            </div>
+        </div>
+
+        <!-- Public Transit Data -->
+<div class="card mb-3">
+    <div class="card-header">
+        Public Transit Data
+    </div>
+    <div class="card-body">
+        <p>Start Address: {{ public_transit_data.start_address }}</p>
+        <p>End Address: {{ public_transit_data.end_address }}</p>
+        {% if public_transit_data.legs %}
+            <p>Duration: {{ public_transit_data.legs[0].duration.text }}</p>
+            <p>Distance: {{ public_transit_data.legs[0].distance.text }}</p>
+            <p>Departure Time: {{ public_transit_data.legs[0].departure_time.text }}</p>
+            <p>Arrival Time: {{ public_transit_data.legs[0].arrival_time.text }}</p>
+        {% endif %}
+    </div>
+</div>
+
+
+        <!-- Interactive Map -->
+        <div id="map"></div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Google Maps API -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC3YfyfxWnejuFxTjN2smhzMoFftz3-YI&callback=initMap"></script>
+    <!-- Custom JavaScript -->
+    <script src="/static/scripts.js"></script>
+</body>
+</html>

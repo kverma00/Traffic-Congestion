@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Insights</title>
+    <!-- Include CSS stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Include Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Plotly.js library -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-4 text-center">Historical Traffic Insights</h1>
+
+        <div class="row">
+
+            <!-- Correlation Matrix -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Correlation Matrix</h5>
+                        <p class="card-text text-center">Explore the relationship between different traffic features.</p>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#correlation-modal">
+                            View Correlation Matrix
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Distribution -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Feature Distribution</h5>
+                        <p class="card-text text-center">View histograms showing the distribution of selected traffic features.</p>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#distribution-modal">
+                            View Feature Distribution
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Hourly Traffic Patterns -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Hourly Traffic Patterns</h5>
+                        <p class="card-text text-center">Explore the average total time stopped during different hours of the day.</p>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#hourly-modal">
+                            View Hourly Traffic Patterns
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Traffic Patterns -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Monthly Traffic Patterns</h5>
+                        <p class="card-text text-center">Explore the average total time stopped during different months.</p>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#monthly-modal">
+                            View Monthly Traffic Patterns
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Top 10 Congested Routes -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Top 10 Congested Routes</h5>
+                        <p class="card-text text-center">Explore the average total time stopped for the top 10 congested routes.</p>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#route-modal">
+                            View Top 10 Congested Routes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traffic Weather Map -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Traffic Weather Map - Top Congested Routes</h5>
+                        <p class="card-text text-center">Explore the impact of weather on the top congested routes.</p>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#scatter-plot-modal">
+                            View Traffic Weather Map
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Clustered Traffic Map -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Clustered Traffic Map</h5>
+                        <p class="card-text text-center">Explore clusters of traffic data points on the map.</p>
+                        <div class="text-center">
+                            <!-- Button to view Clustered Traffic Map -->
+                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#clustered-modal">
+                                View Clustered Traffic Map
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traffic Weather Map 2 -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Traffic Weather Map - Weather Analysis</h5>
+                        <p class="card-text text-center">Explore the relationship between weather conditions and traffic patterns.</p>
+                        <div class="text-center">
+                            <!-- Button to view Weather Analysis Map -->
+                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#line-plot-modal">
+                                View Weather Analysis Map
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Correlation Matrix -->
+    <div class="modal fade" id="correlation-modal" tabindex="-1" role="dialog" aria-labelledby="correlation-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="correlation-modal-label">Correlation Matrix</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add image for Correlation Matrix -->
+                    <img src="{{ url_for('static', filename='correlation_matrix.png') }}" class="img-fluid" alt="Correlation Matrix">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Feature Distribution -->
+    <div class="modal fade" id="distribution-modal" tabindex="-1" role="dialog" aria-labelledby="distribution-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="distribution-modal-label">Feature Distribution</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add image for Feature Distribution -->
+                    <img src="{{ url_for('static', filename='feature_distribution.png') }}" class="img-fluid" alt="Feature Distribution">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Hourly Traffic Patterns -->
+    <div class="modal fade" id="hourly-modal" tabindex="-1" role="dialog" aria-labelledby="hourly-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="hourly-modal-label">Hourly Traffic Patterns</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add image for Hourly Traffic Patterns -->
+                    <img src="{{ url_for('static', filename='hourly_traffic_patterns.png') }}" class="img-fluid" alt="Hourly Traffic Patterns">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Monthly Traffic Patterns -->
+    <div class="modal fade" id="monthly-modal" tabindex="-1" role="dialog" aria-labelledby="monthly-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="monthly-modal-label">Monthly Traffic Patterns</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add image for Monthly Traffic Patterns -->
+                    <img src="{{ url_for('static', filename='Monthly_traffic.png') }}" class="img-fluid" alt="Monthly Traffic Patterns">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Top 10 Congested Routes -->
+    <div class="modal fade" id="route-modal" tabindex="-1" role="dialog" aria-labelledby="route-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="route-modal-label">Top 10 Congested Routes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add image for Top 10 Congested Routes -->
+                    <img src="{{ url_for('static', filename='route_analysis.png') }}" class="img-fluid" alt="Top 10 Congested Routes">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Clustered Traffic Map -->
+    <div class="modal fade" id="clustered-modal" tabindex="-1" role="dialog" aria-labelledby="clustered-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clustered-modal-label">Clustered Traffic Map</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Link to Clustered Traffic Map -->
+                    <a href="{{ url_for('static', filename='clustered_traffic_map.html') }}" class="btn btn-primary btn-block">View Clustered Traffic Map</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Line plot of Traffic Metrics Over Time -->
+<div class="modal fade" id="line-plot-modal" tabindex="-1" role="dialog" aria-labelledby="line-plot-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="line-plot-modal-label">Traffic Metrics Over Time</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add image for Traffic Metrics Over Time -->
+                <img src="{{ url_for('static', filename='traffic-weather2.png') }}" class="img-fluid" alt="Traffic Metrics Over Time">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scatter plot with Regression Line -->
+<div class="modal fade" id="scatter-plot-modal" tabindex="-1" role="dialog" aria-labelledby="scatter-plot-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scatter-plot-modal-label">Scatter Plot of Actual Mean Temp vs. Total Time Stopped</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add image for Scatter Plot with Regression Line -->
+                <img src="{{ url_for('static', filename='traffic-weather3.png') }}" class="img-fluid" alt="Scatter Plot with Regression Line">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Histograms of Weather Variables -->
+<div class="modal fade" id="histogram-modal" tabindex="-1" role="dialog" aria-labelledby="histogram-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="histogram-modal-label">Histograms of Weather Variables</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add image for Histograms of Weather Variables -->
+                <img src="{{ url_for('static', filename='traffic-weather4.png') }}" class="img-fluid" alt="Histograms of Weather Variables">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Include custom JavaScript -->
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
