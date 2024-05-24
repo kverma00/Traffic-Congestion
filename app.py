@@ -14,10 +14,10 @@ from sklearn.cluster import KMeans
 app = Flask(__name__, static_url_path='/static')
 
 # Google Maps API Key
-google_maps_api_key = "AIzaSyCC3YfyfxWnejuFxTjN2smhzMoFftz3-YI"
+google_maps_api_key = "Google-Maps-API"
 
 # OpenWeatherMap API Key
-openweathermap_api_key = "381af21f0b8fa0449d4fe4d6b49ae5ed"
+openweathermap_api_key = "OpenWeatherMap-API"
 
 
 # Function to fetch weather data
